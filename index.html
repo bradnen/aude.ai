@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Chat AI App</title>
+<style>
+  /* Your CSS for chat bubbles, dark/light theme, layout */
+</style>
+</head>
+<body>
+  <aside id="chatHistory"></aside>
+  <main>
+    <header>
+      <h1 id="chatTitle">New Chat</h1>
+      <button onclick="toggleTheme()">Toggle Theme</button>
+      <button onclick="showSettings()">Settings</button>
+      <button onclick="newChatButton()">New Chat</button>
+    </header>
+    <section id="chatMessages"></section>
+    <footer>
+      <textarea id="messageInput" oninput="adjustTextarea(this)" onkeypress="handleKeyPress(event)"></textarea>
+      <button onclick="sendMessage()">Send</button>
+    </footer>
+  </main>
+
+  <div id="settingsModal" class="modal">
+    <!-- Settings form for API key, model, temperature -->
+  </div>
+
+<script>
+  // Your full JS code here
+</script>
+</body>
+</html>

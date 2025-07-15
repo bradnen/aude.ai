@@ -845,3 +845,178 @@
                         <div class="feature-card">
                             <div class="feature-icon">
                                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                                        <path d="M3 12l2-2 4 4 8-8 2 2-10 10z"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Smart Replies</h3>
+                            <p class="feature-description">Get accurate and contextual responses powered by advanced AI models.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Seamless Chat</h3>
+                            <p class="feature-description">Enjoy smooth and real-time conversations with a beautiful interface.</p>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="12" r="10"/>
+                                    <path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Export & Share</h3>
+                            <p class="feature-description">Easily export or share your chats with friends and colleagues.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <form id="chatForm" onsubmit="sendMessage(event)">
+                    <div class="input-wrapper">
+                        <textarea
+                            class="message-input"
+                            id="messageInput"
+                            rows="1"
+                            placeholder="Type your message..."
+                            required
+                        ></textarea>
+                        <button class="send-btn" type="submit" title="Send">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 2L11 13"/>
+                                <path d="M22 2l-6 20-5-9-9-5 20-6z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <!-- Status Indicator -->
+    <div class="status-indicator status-ready" id="statusIndicator">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M5 13l4 4L19 7"/>
+        </svg>
+        <span>Ready</span>
+    </div>
+
+    <!-- Modal (for settings or others) -->
+    <div class="modal" id="settingsModal">
+        <div class="modal-content">
+            <h2>Settings</h2>
+            <div class="form-group">
+                <label for="languageSelect">Language</label>
+                <select id="languageSelect">
+                    <option value="en">English</option>
+                    <option value="th">ไทย</option>
+                    <!-- Add more languages here -->
+                </select>
+            </div>
+
+            <div class="form-group slider-group">
+                <label for="responseSpeed">Response Speed</label>
+                <input type="range" id="responseSpeed" min="1" max="5" value="3">
+                <div class="slider-value" id="speedValue">3</div>
+            </div>
+
+            <div class="modal-actions">
+                <button class="btn btn-secondary" onclick="closeSettings()">Cancel</button>
+                <button class="btn btn-primary" onclick="saveSettings()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleSidebar() {
+            document.getElementById("sidebar").classList.toggle("show");
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle("light-theme");
+        }
+
+        function newChat() {
+            document.getElementById("chatMessages").innerHTML = "";
+            document.getElementById("chatTitle").textContent = "New Conversation";
+        }
+
+        function showSettings() {
+            document.getElementById("settingsModal").classList.add("show");
+        }
+
+        function closeSettings() {
+            document.getElementById("settingsModal").classList.remove("show");
+        }
+
+        function saveSettings() {
+            const speed = document.getElementById("responseSpeed").value;
+            document.getElementById("speedValue").textContent = speed;
+            closeSettings();
+        }
+
+        function sendMessage(event) {
+            event.preventDefault();
+            const input = document.getElementById("messageInput");
+            const message = input.value.trim();
+            if (message === "") return;
+
+            const messages = document.getElementById("chatMessages");
+            const userMessage = document.createElement("div");
+            userMessage.className = "message message-user";
+            userMessage.innerHTML = `
+                <div class="message-avatar">🧑</div>
+                <div class="message-content">${message}</div>
+            `;
+            messages.appendChild(userMessage);
+            input.value = "";
+            input.style.height = "auto";
+            input.focus();
+
+            const status = document.getElementById("statusIndicator");
+            status.className = "status-indicator status-processing";
+            status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg><span>Processing...</span>';
+
+            // Fake assistant reply (replace with real logic or API call)
+            setTimeout(() => {
+                const assistantMessage = document.createElement("div");
+                assistantMessage.className = "message message-assistant";
+                assistantMessage.innerHTML = `
+                    <div class="message-avatar">🤖</div>
+                    <div class="message-content">This is a demo reply from Aude.ai. Customize me!</div>
+                `;
+                messages.appendChild(assistantMessage);
+                status.className = "status-indicator status-ready";
+                status.innerHTML = '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 13l4 4L19 7"/></svg><span>Ready</span>';
+                messages.scrollTop = messages.scrollHeight;
+            }, 1500);
+        }
+
+        function exportChat() {
+            alert("Export feature coming soon!");
+        }
+
+        function shareChat() {
+            alert("Share feature coming soon!");
+        }
+
+        function clearAllChats() {
+            if (confirm("Are you sure you want to delete all chats?")) {
+                document.getElementById("chatHistory").innerHTML = "";
+                newChat();
+            }
+        }
+
+        // Update response speed value
+        document.getElementById("responseSpeed").addEventListener("input", function () {
+            document.getElementById("speedValue").textContent = this.value;
+        });
+    </script>
+</body>
+</html>
+
